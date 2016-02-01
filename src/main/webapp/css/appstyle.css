@@ -1,0 +1,84 @@
+
+.game-card-container img {
+    width: 100%;
+    padding: 0;
+    margin-top: -12%;
+}
+
+.game-card-container {
+    max-height: 200px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.ratingspan {
+    width: 30px;
+    text-align: center;
+
+}
+
+.rating-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.rating-label {
+    float: right;
+    font-style: italic;
+
+}
+
+.sort-span {
+    width: 100% !important;
+
+}
+
+.row .rightcol {
+    float: right;
+}
+
+.mcard {
+    border-bottom-width: 0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-block;
+    color: white;
+    width: 100px;
+    height: 100px;
+}
+
+.mcard:hover {
+
+}
+
+.nobutt {
+    margin-bottom: 5px!important;
+}
+
+.mtitle {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.buttonbox {
+    float: left;
+    margin: 1.14rem 0 0.912rem 0;
+}
+
+.skinnybtn{
+    padding-right: .75rem;
+    padding-left: .75rem;
+}
+.less-padding{
+    padding:5px;
+}

@@ -1,0 +1,139 @@
+<div class="col">
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>Test Game</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="rightcol s2">
+            <div class="row">
+                <div class="row">
+                    <div class="collection">
+                        <a ng-repeat="option in vm.options | orderBy:'order'"
+                           ng-click="option.callback(option.title)"
+                           ng-show="option.active"
+                           class="collection-item">{{option.title}}</a>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="input-field">
+                        <input ng-enter="vm.sendChat()"
+                               ng-model="vm.chatString"
+                               value=""
+                               id="game_name"
+                               type="text"
+                               class="">
+                        <label for="game_name">Chat...</label>
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <a ng-click="vm.sendChat()"
+                       class="waves-effect waves-light btn ">
+                        Send
+                    </a>
+                </div>-->
+                <div class="row" >
+                    <ul class="collection  with-header">
+                        <li class="collection-item "
+                            style="word-wrap: break-word;"
+                            ng-repeat="chat in vm.chats track by $index">
+                            {{chat.name}} - {{chat.text}}
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="rightcol s8">
+            <div class="row nobutt">
+                <p class="nobutt mtitle">Discard Pile:</p>
+            </div>
+            <div class="row">
+                <ul style="border:0px">
+
+                    <li class="z-depth-2 mcard"
+                        ng-style="vm.faceDownCard.style">
+                        <div class="centerText"
+                             style="width:200px;height:300px;display:inline;font-size: 24px;font-weight: 300;">
+                            <p class="nobutt centerText">{{vm.faceDownCard.text}}</p>
+                        </div>
+                    </li>
+                    <li class="z-depth-1 mcard"
+                        ng-style="vm.nowCard.style">
+                        <div class="centerText"
+                             style="width:200px; height:300px; display:inline;font-size: 24px;font-weight: 300;">
+                            <p class="nobutt centerText">{{vm.nowCard.text}}</p>
+                        </div>
+                    </li>
+                    <li class="z-depth-1 mcard"
+                        ng-show="(vm.nowCard.text == 'W')||(vm.nowCard.text == 'W+4')"
+                        ng-style="vm.wildColor">
+                        <div class="centerText"
+                             style="width:200px;height:300px;display:inline;font-size: 24px;font-weight: 300;">
+                            <p class="nobutt centerText">Color</p>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="row nobutt">
+                <p class="nobutt mtitle">Your Cards:{{vm.testText}}</p>
+            </div>
+            <div class="row">
+                <ul style="border:0px">
+                    <li ng-repeat="card in vm.player.cards"
+                        ng-click="card.showSecondary = !card.showSecondary"
+                        class="z-depth-1 mcard"
+                        ng-mouseover="card.style=card.styleon"
+                        ng-mouseleave="card.style=card.styleoff"
+                        ng-style="card.style">
+                        <div class="centerText"
+                             style="width:200px;height:300px;display:inline;">
+                            <p ng-hide="card.showSecondary" class="nobutt mtitle centerText">{{card.text}}</p>
+
+                            <p ng-click="vm.playCard(card)"
+                               class="nobutt mtitle centerText btn"
+                               style="display: block;padding:0 3px;"
+                               ng-show="card.showSecondary"
+
+                                    >
+                                {{(card.color == vm.nowCard.color)||(card.text == vm.nowCard.text)||(card.text ==
+                                'W')||(card.text == 'W+4')?'Play':'Nope'}}
+                            </p>
+                        </div>
+
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="rightcol s2">
+            <div ng-repeat="player in vm.otherPlayers"
+                 class="card">
+                <div class="card-content">
+                    <span class="card-title" style="color: black">{{player.name}}</span>
+
+                    <p ng-repeat="data in player.otherData">
+                        {{data.title}} - {{data.data}}
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a href="#">More...</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button data-target="modal1" class="btn modal-trigger">Modal</button>
+
+<div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>

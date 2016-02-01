@@ -1,0 +1,82 @@
+<a class="btn-flat" style="padding-right:0;width:100%;text-align:right;">Sort:</a>
+
+<div>
+    <div class="row" style="margin-left:0">
+
+        <div ng-repeat="menuItem in sortOptions.slice().reverse()" ><!--class="col l1 s6 m3"-->
+
+                <a class="waves-effect waves-light btn" style=";margin:10px;padding: 0 10px 0 10px;float:right;/*width:140px;*/"
+                  ng-click="restaurants.sort(menuItem.callback)"> {{ menuItem.name }}</a>
+        </div>
+    </div>
+</div>
+<ul>
+    <li ng-show="restaurants.length == 0">
+        <p>Data server not up... :(</p>
+    </li>
+
+
+</ul>
+
+{{tempRestaurant.name}} {{tempRestaurant.ratings[0]}}
+<table class="centered highlight">
+    <thead>
+    <tr>
+        <th data-field="id"><h5>Restaurant</h5></th>
+        <th data-field="name"><h6>David</h6></th>
+        <th data-field="name"><h6>Stephen</h6></th>
+        <th data-field="name"><h6>Ryan</h6></th>
+        <th data-field="name"><h6>John</h6></th>
+        <th data-field="price"><h5>Average</h5></th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr ng-show="addMode" style="background-color: #f2f2f2;">
+        <td>
+            <input  placeholder="Restaurant"
+                   ng-model="tempRestaurant.name"
+                   id="first_name" type="text" class="validate"
+                    style="text-align: center;">
+        </td>
+
+        <td ng-repeat="rating in tempRestaurant.ratings track by $index">
+            <input
+                   placeholder="0" id="rating{{$index}}"
+                   ng-model="tempRestaurant.ratings[$index]"
+                   ng-change="resetTempAvg()"
+                   type="text" class="validate"
+                   style="text-align: center;">
+
+
+        </td>
+        <td>
+            {{tempAvg}}
+        </td>
+    </tr>
+
+    <tr ng-repeat="restaurant in restaurants">
+        <td>
+            <span style="width:400px;text-align: left">{{ restaurant.name }}</span>
+        </td>
+
+        <td ng-repeat="rating in restaurant.ratings track by $index">
+            {{rating >=0?rating:'N/A'}}
+        </td>
+        <td>
+            {{average(restaurant.ratings) }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large" ng-click="addSave()">
+        {{addMode?'save':'add'}}
+    </a>
+
+</div>
+
+
+

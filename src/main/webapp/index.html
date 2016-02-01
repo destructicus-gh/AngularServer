@@ -1,0 +1,68 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- CSS (load bootstrap
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            border-radius: 0;
+        }
+    </style>
+    ) -->
+    <!-- JS (load angular, ui-router, and our custom js file) -->
+    <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <script src="js/dist/paper-core.js"></script>
+    <script src="js/dist/paper-full.js"></script>
+
+
+    <!--Materialize-->
+    <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <!--My files-->
+    <script src="js/app.js"></script>
+    <script src="js/ratingList.js"></script>
+    <script src="js/game-search.js"></script>
+    <script src="js/test-game.js"></script>
+    <script src="js/force.destiny.top.js"></script>
+    <script src="js/fnd.items.js"></script>
+    <script src="js/fnd.characters.js"></script>
+    <link rel="stylesheet" href="css/appstyle.css">
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="routerApp">
+<nav>
+    <div class="nav-wrapper grey darken-4">
+        <a ui-sref="home" class="brand-logo right">Test Web App</a>
+        <ul id="nav-mobile" class="left">
+            <li><a ui-sref="home">Home</a></li>
+            <li><a ui-sref="ratings">Ratings</a></li>
+            <li><a ui-sref="paperjs">Paper Test</a></li>
+            <li><a ui-sref="gamesearch">Board Game Search</a></li>
+            <li><a ui-sref="testgame">Test Game</a></li>
+            <li><a ui-sref="fnd">Force and Destiny</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+    <div ui-view></div>
+
+</div>
+
+</body>
+</html>

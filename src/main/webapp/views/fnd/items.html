@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="input-field col s6">
+        <input id="search"
+               ng-model="fdi.searchString"
+               type="text">
+        <label for="search">Search</label>
+    </div>
+    <div class="col s4">
+        <h4 class="capitalize">{{fdi.currentItem.name}}</h4>
+    </div>
+    <div class="col s2 buttonbox push-s4" ng-show="fdi.currentItem">
+        <a class="btn skinnybtn"
+           ng-click="fdi.openEdit(1)">
+            <i class="material-icons">add</i>
+        </a>
+        <a class="btn skinnybtn"
+           ng-click="fdi.openEdit(2)">
+            <i class="material-icons">create</i>
+        </a>
+        <a class="btn skinnybtn"
+           ng-click="fdi.deleteItem()">
+            <i class="material-icons">clear</i>
+        </a>
+    </div>
+</div>
+<div class="col s6"> <!--left, character list-->
+    <table class="highlight bordered">
+        <thead>
+        <tr>
+            <th data-field="name">Name</th>
+            <th data-field="type">Uses Skill</th>
+            <th data-field="data">Range</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="item in fdi.items | filter:fdi.searchString"
+            ng-click="fdi.currentItem = item">
+            <td class="capitalize">{{item.name}}</td>
+            <td>{{item.skill}}</td>
+            <td>{{item.range}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col s6"> <!--right, character list-->
+    <table class="striped bordered"  ng-show="fdi.currentItem">
+        <thead>
+        <tr>
+            <th data-field="name">Quality</th>
+            <th data-field="type">Value</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="(key, value) in fdi.currentItem" ng-if="key!='id'">
+            <td class="capitalize">{{(key == 'hardPoints')?'hard points':key}}</td>
+            <td class="capitalize">{{(key=="specials")?fdi.specialsText(value):value}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>{{fdi.modalData.title}}</h4>
+        <table class="bordered">
+            <thead>
+            <tr>
+                <th data-field="name">Quality</th>
+                <th data-field="type">Value</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="(key, value) in fdi.modalData.item" ng-if="key!='id'" class="">
+                <td class="capitalize">{{(key == 'hardPoints')?'hard points':key}}</td>
+                <td class="capitalize less-padding">
+                    <div class="col s6 nobutt" ng-if="key!='specials'">
+                        <input  type="text" class="nobutt" ng-model="fdi.modalData.item[key]">
+                    </div>
+                    <!-- {{(key=="specials")?fdi.specialsText(value):value}}-->
+                   </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <a ng-click="fdi.closeEdit()" class="modal-action waves-effect waves-green btn-flat ">Close</a>
+        <a ng-click="fdi.saveCopy()" class="modal-action waves-effect waves-green btn-flat ">Save as New</a>
+        <a ng-click="fdi.save()" class="modal-action waves-effect waves-green btn-flat ">Save</a>
+    </div>
+</div>
