@@ -9,16 +9,16 @@ package AngularServer.models.fnd;
  *         of HEB
  */
 public class Skill {
-    SkillType name;
+    SkillType skill;
     Boolean isCareer;
     Integer level;
 
-    public SkillType getName() {
-        return name;
+    public SkillType getSkill() {
+        return skill;
     }
 
-    public void setName(SkillType name) {
-        this.name = name;
+    public void setSkill(SkillType skill) {
+        this.skill = skill;
     }
 
     public Boolean getIsCareer() {
@@ -44,12 +44,12 @@ public class Skill {
 
         Skill skill = (Skill) o;
 
-        return !(name != null ? !name.equals(skill.name) : skill.name != null);
+        return !(skill != null ? !skill.equals(skill.skill) : skill.skill != null);
 
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return skill != null ? skill.hashCode() : 0;
     }
 }

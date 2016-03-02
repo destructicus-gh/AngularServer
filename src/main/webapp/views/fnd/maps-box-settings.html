@@ -1,0 +1,61 @@
+<div class="row valign-wrapper">
+    <div class="col s12"> Box Settings</div>
+</div>
+
+<div class="row valign-wrapper">
+    <div class=" valign col s3">Bubble Level:</div>
+
+    <div class="valign col s9">
+        <input name="group1" type="radio" id="test1"
+               ng-model="fdm.currentElement.bubble"
+               value="1"/>
+        <label style="padding-right: 20px;" for="test1">1</label>
+        <input name="group1" type="radio" id="test2"
+               ng-model="fdm.currentElement.bubble"
+               value="2" />
+        <label style="padding-right: 20px;" for="test2">2</label>
+        <input name="group1" type="radio" id="test3" disabled="disabled"
+               ng-model="fdm.currentElement.bubble"
+               value="3" />
+        <label style="padding-right: 20px;" for="test3">3</label>
+    </div>
+</div>
+
+<div class="row valign-wrapper">
+    <div class=" valign col s3">Snap:</div>
+
+    <div class="valign col s3">
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox" ng-model="fdm.currentElement.snapOn">
+                <span class="lever"></span>
+                On{{fdm.currentElement.snapOn?(': '+fdm.currentElement.snap):''}}
+            </label>
+        </div>
+    </div>
+    <div class="valign col s6">
+        <span class="range-field" >
+            <input ng-model="fdm.currentElement.snap"
+                   ng-disabled="!fdm.currentElement.snapOn"
+                   type="range" id="test5" min="5" max="100" step="5"/>
+        </span>
+    </div>
+</div>
+
+<div class="row valign-wrapper">
+    <div class=" valign col s3">Controls:</div>
+
+    <div class="valign col s3">
+        <div class="switch">
+            <label>
+                Off
+                <input type="checkbox"
+                       ng-model="fdm.currentElement.controlsOn"
+                       ng-change="fdm.currentElement.changeControl()">
+                <span class="lever"></span>
+                On
+            </label>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<script type="text/ng-template" id="treeNode">
+
+    <span class="hover-item">
+        <i class="tiny material-icons"
+           ng-click="dataItem.extended = !dataItem.extended"
+
+           ng-class="dataItem.extended ? 'arrow-open' : 'arrow-close'">play_arrow</i>
+        <span ng-click="fdm.elementClick(dataItem)">{{ dataItem.name }}...{{dataItem.parent.name}}</span>
+        <a ng-if="fdm.selectMode"
+           class="waves-effect waves-light btn right skinnybtn"
+           ng-click="fdm.selectMode(dataItem)">
+            <i class="material-icons">add</i>
+        </a>
+    </span>
+    <div
+            ng-if="dataItem.children&&dataItem.extended">
+        <div ng-repeat="dataItem in dataItem.children"
+             class="directory-list-item"
+             ng-include="'treeNode'">
+        </div>
+    </div>
+</script>
+
+
+<div class="col s4 raised slide" ng-if="fdm.currentElement== null"> <!--left, character list-->
+    <div ng-repeat="dataItem in fdm.data" ng-include="'treeNode'" class="directory-list-item">
+        <span class="hover-item">{{dataItem.name}}</span>
+    </div>
+</div>
+
+
+<div class="col s4 raised container slide" ng-if="fdm.currentElement!= null">
+    <div class="row valign-wrapper">
+        <div class=" valign col offset-s8"></div>
+        <div class="input-field col  s4">
+            <a class="waves-effect waves-light btn right skinnybtn"
+               ng-click="fdm.currentElement= null">
+                <i class="material-icons">replay</i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row valign-wrapper">
+        <div class=" valign col s4">Fill Color:</div>
+        <div class="input-field col s8">
+            <input ng-model="fdm.currentElement.object.fill" ng-change="fdm.canvas.redraw()" type="text">
+        </div>
+    </div>
+
+    <div class="row valign-wrapper">
+        <div class=" valign col s4">Parent:</div>
+        <div class="valign col s6">
+            {{fdm.currentElement.parent.name||'None'}}
+        </div>
+        <div class="valign col s2">
+            <a ng-if="fdm.canReparent(fdm.currentElement)"
+               class="waves-effect waves-light btn right skinnybtn"
+               ng-click="fdm.selectMode = fdm.setCurrentParent">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+    </div>
+    <div class="row valign-wrapper">
+        <div class=" valign col s4">Lines:</div>
+        <div class="valign col s6">
+
+        </div>
+        <div class="valign col s2">
+            <a class="waves-effect waves-light btn right skinnybtn"
+               ng-click="">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+    </div>
+    <div class="row valign-wrapper"
+         ng-repeat="line in fdm.currentElement.linesFrom">
+        <div class="valign col offset-s2 s8 shadow-item">
+            To: {{fdm.findLineOtherEnd(line, true).name}}
+        </div>
+        <div class="valign col s1">
+            <a class="waves-effect waves-light btn right skinnybtn"
+               ng-click="">
+                <i class="material-icons">trending_flat</i>
+            </a>
+        </div>
+        <div class="valign col s1">
+            <a class="waves-effect waves-light btn right skinnybtn"
+               ng-click="">
+                <i class="material-icons">settings</i>
+            </a>
+        </div>
+    </div>
+    <div class="row valign-wrapper"
+         ng-repeat="line in fdm.currentElement.linesTo">
+        <div class="valign col offset-s2 s8 shadow-item">
+            From: {{fdm.findLineOtherEnd(line, false).name}}
+        </div>
+        <div class="valign col s1">
+            <a class="waves-effect waves-light btn right skinnybtn"
+               ng-click="">
+                <i class="material-icons">trending_flat</i>
+            </a>
+        </div>
+        <div class="valign col s1">
+            <a class="waves-effect waves-light btn right skinnybtn"
+               ng-click="">
+                <i class="material-icons">settings</i>
+            </a>
+        </div>
+    </div>
+    <div ng-include="'views/fnd/maps-box-settings.html'"></div>
+</div>
+
+<div class="col s7"> <!--left, character list-->
+    <div id="main">
+        <canvas id="stage" width="100" height="100" style="margin:auto"></canvas>
+    </div>
+</div>

@@ -36,6 +36,12 @@ routerApp.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: '/views/game-search.html',
             controller: 'GameSearchController as vm'
         })
+        .state('one', {
+            url: '/one',
+            templateUrl: '/views/onemeth/main.html',
+            controller: 'OneMethFlowController as flow'
+
+        })
         .state('fnd', {
             url: '/fnd',
             templateUrl: '/views/force-destiny-top.html',
@@ -46,6 +52,11 @@ routerApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/items',
             templateUrl:'/views/fnd/items.html',
             controller: 'FNDItemController as fdi'
+        })
+        .state('fnd.maps', {
+            url: '/maps',
+            templateUrl:'/views/fnd/maps.html',
+            controller: 'FNDMapsController as fdm'
         })
         .state('fnd.characters', {
             url: '/characters',

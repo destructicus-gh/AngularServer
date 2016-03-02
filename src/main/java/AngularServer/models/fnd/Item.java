@@ -17,9 +17,10 @@ import java.util.List;
 
 public class Item implements Idenfitiable, Serializable{
 
-    static class Special implements Serializable{
+    public static class Special implements Serializable{
         private String name;
         private Integer level;
+        private Boolean active;
 
         public Special() {
         }
@@ -43,6 +44,14 @@ public class Item implements Idenfitiable, Serializable{
 
         public void setLevel(Integer level) {
             this.level = level;
+        }
+
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
         }
     }
     enum UseSkill{

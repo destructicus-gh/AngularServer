@@ -1,0 +1,28 @@
+{
+  "ids" : {
+    "next" : 3,
+    "backflow" : [ 3, 0 ]
+  },
+  "items" : [ {
+    "id" : 1,
+    "name" : "Stun Blaster",
+    "skill" : "RangedL",
+    "range" : "Short",
+    "damage" : 5,
+    "critical" : 5,
+    "encumberance" : 2,
+    "hardPoints" : 0,
+    "price" : null,
+    "restricted" : true,
+    "rarity" : null,
+    "specials" : [ {
+      "name" : "Stun Damage",
+      "level" : null,
+      "active" : null
+    }, {
+      "name" : "Accurate",
+      "level" : 3,
+      "active" : false
+    } ]
+  } ]
+}

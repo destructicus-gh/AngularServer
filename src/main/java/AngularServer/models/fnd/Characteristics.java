@@ -1,7 +1,6 @@
 package AngularServer.models.fnd;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Created by a689638 on 2/1/2016.
@@ -12,31 +11,58 @@ import java.util.Map;
  *         of HEB
  */
 public class Characteristics implements Serializable{
-    public enum Characteristic{
-        Brawn, Agility, Intellect, Cunning, Willpower, Presence
-    }
-    Map<Characteristic, Integer> c;
+    Integer brawn;
+    Integer agility;
+    Integer intellect;
+    Integer cunning;
+    Integer willpower;
+    Integer presence;
 
-    private static Characteristic getSafe(String characteristic){
-        try{
-            return Characteristic.valueOf(characteristic);
-        }catch (Exception e){
-            return null;
-        }
+    public Integer getBrawn() {
+        return brawn;
     }
 
-    public Integer getCharacteristic(Characteristic characteristic){
-        return c.get(characteristic);
-    }
-    public Integer getCharacteristic(String characteristic){
-        Characteristic ch = getSafe(characteristic);
-        return (ch == null)?null:getCharacteristic(ch);
-    }
-    public Boolean setCharacteristic(String characteristic, Integer value){
-        Characteristic ch = getSafe(characteristic);
-
-        return (ch == null||c.containsKey(ch))?null:c.put(ch, value)==null;
-
+    public void setBrawn(Integer brawn) {
+        this.brawn = brawn;
     }
 
+    public Integer getAgility() {
+        return agility;
+    }
+
+    public void setAgility(Integer agility) {
+        this.agility = agility;
+    }
+
+    public Integer getIntellect() {
+        return intellect;
+    }
+
+    public void setIntellect(Integer intellect) {
+        this.intellect = intellect;
+    }
+
+    public Integer getCunning() {
+        return cunning;
+    }
+
+    public void setCunning(Integer cunning) {
+        this.cunning = cunning;
+    }
+
+    public Integer getWillpower() {
+        return willpower;
+    }
+
+    public void setWillpower(Integer willpower) {
+        this.willpower = willpower;
+    }
+
+    public Integer getPresence() {
+        return presence;
+    }
+
+    public void setPresence(Integer presence) {
+        this.presence = presence;
+    }
 }

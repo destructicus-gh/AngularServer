@@ -4,7 +4,7 @@
 
 (function () {
     'use strict';
-    angular.module('routerApp').controller('FNDItemController', ['ItemService', function (ItemService) {
+    angular.module('routerApp').controller('FNDItemController', ['ItemService', 'Utilities', function (ItemService, Utilities) {
         var fdi = this;
         fdi.items = [];
         fdi.currentItem = null;
@@ -17,6 +17,12 @@
         fdi.save = save;
         fdi.saveCopy = saveCopy;
         fdi.deleteItem = deleteItem;
+        fdi.closeSpecial = closeSpecial;
+        fdi.openSpecial = openSpecial;
+
+        fdi.itemsEqual = itemsEqual;
+
+        fdi.specials = [];
 
         fdi.modalData = {
             isNew:true,
@@ -26,9 +32,15 @@
         init();
         function init() {
             ItemService.getAllItems().then(function (raw) {
-                console.log(raw.data);
+                console.log("loading items", raw.data);
                 fdi.items = raw.data;
-            })
+            });
+            ItemService.getAllSpecial().then(function (raw) {
+                console.log("loading specials", raw.data);
+                fdi.specials = raw.data;
+            });
+            $('select').material_select();
+
         }
 
         function attributeName(name) {
@@ -48,18 +60,33 @@
                 ItemService.newItem().then(function(raw){
                     fdi.modalData.item = raw.data;
                     $('#modal1').openModal();
+                    $('select').material_select();
                 });
             }
             if (option == 2){
-                fdi.modalData.item=fdi.currentItem;
+                fdi.modalData.item = Utilities.deepCopy(fdi.currentItem, "Copy for edit, item:"+fdi.currentItem.name);
                 $('#modal1').openModal();
+                $('select').material_select();
             }
+
+        }
+
+
+        function openSpecial() {
+            fdi.modalData.specials = Utilities.deepCopy(fdi.specials, "fdi.specials");
+            $('#select-special').openModal();
+
+
+        }
+        function closeSpecial() {
+            $('#select-special').closeModal();
+            fdi.modalData.specials = null;
 
         }
 
         function closeEdit() {
             $('#modal1').closeModal();
-            fdi.modalData.item=null;
+            fdi.modalData.item = null;
 
         }
 
@@ -71,6 +98,7 @@
                     fdi.items = raw.data;
                     $('#modal1').closeModal();
                 });
+                fdi.currentItem = raw.data;
 
             });
         }
@@ -94,16 +122,24 @@
 
             });
         }
+        function itemsEqual(i1, i2){
+            return i1==i2;
+        }
     }])
         .service('ItemService', ['$http', function ($http) {
 
             return {
+                getAllSpecial:getAllSpecial,
                 getAllItems: getAllItems,
                 saveItem: saveItem,
                 saveCopyItem: saveCopyItem,
                 newItem:newItem,
                 deleteItem:deleteItem
             };
+
+            function getAllSpecial(){
+                return $http.get("/specials");
+            }
             function getAllItems() {
                 return $http.get('/item');
             }
@@ -115,6 +151,7 @@
             }
             function saveCopyItem(item){
                 item.id=null;
+                console.log("copy", item);
                 return $http.post('/item', item);
             }
 

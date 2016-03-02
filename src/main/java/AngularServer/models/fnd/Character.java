@@ -38,9 +38,6 @@ public class Character implements Idenfitiable, Serializable {
     Set<Skill> skills;
     ///////
 
-
-
-
     List<Integer> items;
 
     @Override

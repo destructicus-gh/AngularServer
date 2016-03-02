@@ -8,16 +8,17 @@
     <div class="col s4">
         <h4 class="capitalize">{{fdi.currentItem.name}}</h4>
     </div>
-    <div class="col s2 buttonbox push-s4" ng-show="fdi.currentItem">
-        <a class="btn skinnybtn"
+    <div class="col s2 buttonbox push-s4" >
+        <a class="btn"
+           ng-class="{'skinnybtn':fdi.currentItem != null}"
            ng-click="fdi.openEdit(1)">
             <i class="material-icons">add</i>
         </a>
-        <a class="btn skinnybtn"
+        <a class="btn skinnybtn" ng-show="fdi.currentItem"
            ng-click="fdi.openEdit(2)">
             <i class="material-icons">create</i>
         </a>
-        <a class="btn skinnybtn"
+        <a class="btn skinnybtn" ng-show="fdi.currentItem"
            ng-click="fdi.deleteItem()">
             <i class="material-icons">clear</i>
         </a>
@@ -45,11 +46,11 @@
     </table>
 </div>
 <div class="col s6"> <!--right, character list-->
-    <table class="striped bordered"  ng-show="fdi.currentItem">
+    <table class="striped bordered" ng-show="fdi.currentItem">
         <thead>
         <tr>
-            <th data-field="name">Quality</th>
-            <th data-field="type">Value</th>
+            <th data-field="type" style="width: 35%">Attribute</th>
+            <th data-field="type" style="width: 65%">Value</th>
         </tr>
         </thead>
 
@@ -79,10 +80,13 @@
                 <td class="capitalize">{{(key == 'hardPoints')?'hard points':key}}</td>
                 <td class="capitalize less-padding">
                     <div class="col s6 nobutt" ng-if="key!='specials'">
-                        <input  type="text" class="nobutt" ng-model="fdi.modalData.item[key]">
+                        <input type="text" class="nobutt" ng-model="fdi.modalData.item[key]">
+                    </div>
+                    <div class="col s6 input-field" ng-if="key =='specials'">
+                        <a ng-click="fdi.openSpecial()" class="modal-action waves-effect waves-green btn-flat ">Edit</a>
                     </div>
                     <!-- {{(key=="specials")?fdi.specialsText(value):value}}-->
-                   </td>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -92,5 +96,52 @@
         <a ng-click="fdi.closeEdit()" class="modal-action waves-effect waves-green btn-flat ">Close</a>
         <a ng-click="fdi.saveCopy()" class="modal-action waves-effect waves-green btn-flat ">Save as New</a>
         <a ng-click="fdi.save()" class="modal-action waves-effect waves-green btn-flat ">Save</a>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="select-special" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Item Specials</h4>
+        <table class="bordered centered" style="width:50%">
+            <thead>
+            <tr>
+                <th data-field="name">Attribute</th>
+                <th data-field="type">Engaged</th>
+                <th data-field="level">Rank</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+
+
+            <tr ng-repeat="special in fdi.modalData.specials">
+                <td class="capitalize" style="width:100px">{{special.name}}</td>
+                <td class="less-padding" style="width:30px"
+                    ng-init="special.level = 0">
+                    <input type="checkbox"
+                           value="special"
+                           level="special.level"
+                           check-list='fdi.modalData.item.specials'
+                           id="{{special.name}}"
+                           identity-function="fdi.itemsEqual"/>
+                    <label for="{{special.name}}" ></label>
+                    <!-- {{(key=="specials")?fdi.specialsText(value):value}}-->
+                </td>
+                <td style="width:30px">
+                    <div class="input-field" >
+
+                        <input id="a{{special.name}}" type="text" class="validate"
+                                ng-model="special.level">
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="fdi.closeSpecial()"  class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
     </div>
 </div>

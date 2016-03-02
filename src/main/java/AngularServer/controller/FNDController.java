@@ -1,8 +1,8 @@
 package AngularServer.controller;
 
-import AngularServer.models.fnd.Character;
 import AngularServer.models.fnd.Item;
 import AngularServer.repository.FileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -24,16 +23,11 @@ import java.util.List;
  */
 @Controller
 public class FNDController {
+    @Autowired
     private FileRepository<Item> itemFileRepository;
-    {
-        itemFileRepository = new FileRepository<>("Item", new File("fd"));
-        itemFileRepository.readFromFile();
-    }
-    private FileRepository<Character> characterFileRepository;
-    {
-        characterFileRepository = new FileRepository<>("Character", new File("fd"));
-        characterFileRepository.readFromFile();
-    }
+
+
+
 
     @RequestMapping("/item")
     public @ResponseBody
@@ -42,12 +36,6 @@ public class FNDController {
         return itemFileRepository.getItems();
     }
 
-    @RequestMapping("/character")
-    public @ResponseBody
-    List<Character> characters( @RequestParam(value = "search", required = false) String search) {
-        characterFileRepository.readFromFile();
-        return characterFileRepository.getItems();
-    }
 
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
@@ -72,4 +60,5 @@ public class FNDController {
         itemFileRepository.writeToFile();
         return item;
     }
+
 }

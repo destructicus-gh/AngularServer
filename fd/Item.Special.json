@@ -1,0 +1,33 @@
+{
+  "items" : [ 
+  {"name":"Accurate", "active":false},
+  {"name":"Autofire", "active":true},
+  {"name":"Blast", "active":true},
+  {"name":"Breach", "active":false},
+  {"name":"Burn", "active":true},
+  {"name":"Concussive", "active":true},
+  {"name":"Cortosis", "active":false},
+  {"name":"Cumbersome", "active":false},
+  {"name":"Defensive", "active":false},
+  {"name":"Deflection", "active":false},
+  {"name":"Disorient", "active":true},
+  {"name":"Ensnare", "active":true},
+  {"name":"Guided", "active":true},
+  {"name":"Knockdown", "active":true},
+  {"name":"Inaccurate", "active":false},
+  {"name":"Inferior", "active":false},
+  {"name":"Ion", "active":false},
+  {"name":"Limited Ammo", "active":false},
+  {"name":"Linked", "active":true},
+  {"name":"Pierce", "active":false},
+  {"name":"Prepare", "active":false},
+  {"name":"Slow-Firing", "active":false},
+  {"name":"Stun", "active":true},
+  {"name":"Stun Damage", "active":false},
+  {"name":"Sunder", "active":true},
+  {"name":"Superior", "active":false},
+  {"name":"Tractor", "active":false},
+  {"name":"Unwieldy", "active":false},
+  {"name":"Vicious", "active":false}
+  ]
+}

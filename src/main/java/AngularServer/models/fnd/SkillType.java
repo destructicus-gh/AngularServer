@@ -13,5 +13,30 @@ public class SkillType {
         General, Combat, Knowledge, Custom
     }
     String name;
+    SkillClass skillClass;
+    String characteristic;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public SkillClass getSkillClass() {
+        return skillClass;
+    }
+
+    public void setSkillClass(SkillClass skillClass) {
+        this.skillClass = skillClass;
+    }
+
+    public String getCharacteristic() {
+        return characteristic;
+    }
+
+    public void setCharacteristic(String characteristic) {
+        this.characteristic = characteristic;
+    }
 }

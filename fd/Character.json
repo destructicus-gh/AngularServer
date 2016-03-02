@@ -1,0 +1,38 @@
+{
+  "ids" : {
+    "next" : 1,
+    "backflow" : [ ]
+  },
+  "items" : [ {
+    "id" : 0,
+    "name" : "Stormtrooper(On Ship)",
+    "species" : "Human",
+    "type" : "Minion",
+    "soak" : 5,
+    "wound_t" : 5,
+    "wound_c" : 0,
+    "strain_t" : 0,
+    "strain_c" : 0,
+    "defense_r" : 0,
+    "defense_m" : 0,
+    "characteristics" : {
+      "brawn" : 3,
+      "agility" : 3,
+      "intellect" : 2,
+      "cunning" : 2,
+      "willpower" : 2,
+      "presence" : 1
+    },
+    "skills" : [ {
+      "skill" : {
+        "name" : "Athletics",
+        "skillClass" : "General",
+        "characteristic" : "Intellect"
+      },
+      "isCareer" : null,
+      "level" : 2
+    } ],
+    "items" : null,
+    "career" : null
+  } ]
+}

@@ -1,20 +1,175 @@
+<div class="row">
+    <div class="input-field col s6">
+        <input id="search"
+               ng-model="fdc.searchString"
+               type="text">
+        <label for="search">Search</label>
+    </div>
+    <div class="col s4">
+        <h4 class="capitalize">{{fdc.currentCharacter.name}}</h4>
+    </div>
+    <div class="col s2 buttonbox push-s4">
+        <a class="btn"
+           ng-class="{'skinnybtn':fdc.currentCharacter != null}"
+           ng-click="fdc.openEdit(1)">
+            <i class="material-icons">add</i>
+        </a>
+        <a class="btn skinnybtn" ng-show="fdc.currentCharacter"
+           ng-click="fdc.openEdit(2)">
+            <i class="material-icons">create</i>
+        </a>
+        <a class="btn skinnybtn" ng-show="fdc.currentCharacter"
+           ng-click="fdc.deleteCharacter()">
+            <i class="material-icons">clear</i>
+        </a>
+    </div>
+</div>
 <div class="col s6"> <!--left, character list-->
-    <table>
+    <table class="highlight bordered">
         <thead>
         <tr>
             <th data-field="name">Name</th>
-            <th data-field="type">Item Name</th>
-            <th data-field="data">Location</th>
-            <th data-field="data">Role</th>
+            <th data-field="type">Species</th>
+            <th data-field="data">Career</th>
+
         </tr>
         </thead>
 
         <tbody>
-        <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
+        <tr ng-repeat="character in fdc.characters | filter:fdc.searchString"
+            ng-click="fdc.currentCharacter = character">
+            <td class="capitalize">{{character.name}}</td>
+            <td>{{character.species}}</td>
+            <td>{{character.career}}</td>
         </tr>
         </tbody>
     </table>
+</div>
+<div class="col s6"> <!--right, character list-->
+    <table class="striped bordered" ng-show="fdc.currentCharacter">
+        <thead>
+        <tr>
+            <th data-field="type" style="width: 40%">Attribute</th>
+            <th data-field="type" style="width: 60%">Value</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="(key, value) in fdc.currentCharacter"
+            ng-if="key!='id' && key!='name'"
+            ng-switch="key">
+            <td class="capitalize">{{fdc.attributeName(key)}}</td>
+
+            <td class="capitalize"
+                ng-switch-when="characteristics">
+                <span ng-repeat="(char, num) in value">
+                    {{char}}:{{num}}{{($last)?'':', '}}
+                </span>
+            </td>
+            <td class="capitalize"
+                ng-switch-when="skills">
+                <span ng-repeat="skill in value">
+                    {{skill.skill.name}}:{{skill.level}}{{($last)?'':', '}}
+                </span>
+            </td>
+            <td class="capitalize"
+                ng-switch-default>{{value}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>{{fdc.modalData.title}}</h4>
+        <table class="bordered">
+            <thead>
+            <tr>
+                <th data-field="name">Attribute</th>
+                <th data-field="type">Value</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="(key, value) in fdc.modalData.character"
+                ng-if="key!='id'" class=""
+                    ng-switch="key">
+                <td class="capitalize">{{key}}</td>
+                <td class="capitalize less-padding"
+                        ng-switch-when="skills">
+                    <div class="col s6 input-field">
+                        <a ng-click="fdc.openSkills()" class="modal-action waves-effect waves-green btn-flat ">Edit</a>
+                    </div>
+                </td>
+                <td class="capitalize less-padding"
+                    ng-switch-when="characteristics">
+                    <div class="col s6 input-field">
+                        <a ng-click="fdc.openSkills()" class="modal-action waves-effect waves-green btn-flat ">Edit</a>
+                    </div>
+                </td>
+                <td class="capitalize less-padding" >
+                    <div class="col s6 nobutt"
+                         ng-switch-default>
+                        <input type="text" class="nobutt" ng-model="fdc.modalData.character[key]">
+                    </div>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <a ng-click="fdc.closeEdit()" class="modal-action waves-effect waves-green btn-flat ">Close</a>
+        <a ng-click="fdc.saveCopy()" class="modal-action waves-effect waves-green btn-flat ">Save as New</a>
+        <a ng-click="fdc.save()" class="modal-action waves-effect waves-green btn-flat ">Save</a>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="select-special" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Character Skills</h4>
+        <table class="bordered centered" style="width:50%">
+            <thead>
+            <tr>
+                <th data-field="name">Attribute</th>
+                <th data-field="enabled">Enabled</th>
+                <th data-field="level">Rank</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="skill in fdc.modalData.skills">
+                <td class="capitalize" style="width:100px">{{skill.skill.name}}</td>
+                <td class="less-padding" style="width:30px"
+                    ng-init="skill.level = 0">
+                    <input type="checkbox"
+                           value="skill"
+                           check-list='fdc.modalData.character.skills'
+                           identity-function="fdc.skillsEqual"
+                           level="skill.level"
+                           id="{{skill.skill.name}}"/>
+                    <label for="{{skill.skill.name}}"></label>
+                </td>
+                <td style="width:30px">
+                    <div class="input-field">
+                        <input id="a{{skill.skill.name}}" type="text" class=""
+                               ng-model="skill.level"
+                               ng-show="fdc.showNumber(skill)">
+                        <input type="text" class=""
+                               value=" " disabled
+                               ng-hide="fdc.showNumber(skill)">
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="fdc.closeSkill()" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+    </div>
 </div>

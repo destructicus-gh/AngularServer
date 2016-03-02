@@ -31,7 +31,13 @@ public class FileRepository<E extends Idenfitiable> implements Serializable {
         }
 
         Integer nextNumber() {
-            return backflow.isEmpty() ? next++ : backflow.remove(0);
+            if (backflow.isEmpty()) {
+                next = next + 1;
+                return next;
+            } else {
+                return backflow.pop();
+            }
+
         }
 
         void giveBack(Integer old) {
@@ -56,18 +62,24 @@ public class FileRepository<E extends Idenfitiable> implements Serializable {
     }
 
     private IdGen ids = new IdGen();
+    private Class classType;
 
     private List<E> items = new ArrayList<>();
     private String name;
     private File storageLocation;
     private ObjectMapper mapper = new ObjectMapper();
 
+    {
+        //mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+    }
+
     public FileRepository() {
     }
 
-    public FileRepository(String name, File storageLocation) {
+    public FileRepository(String name, File storageLocation, Class classType) {
         this.name = name;
-        this.storageLocation = new File(storageLocation.getAbsolutePath()+'/'+this.name + ".json");
+        this.classType = classType;
+        this.storageLocation = new File(storageLocation.getAbsolutePath() + '/' + this.name + ".json");
         readFromFile();
     }
 
@@ -80,7 +92,7 @@ public class FileRepository<E extends Idenfitiable> implements Serializable {
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(storageLocation, this);
         } catch (FileNotFoundException e) {
-            printError("No File, Default to no things. File:"+storageLocation.getAbsolutePath());
+            printError("No File, Default to no things. File:" + storageLocation.getAbsolutePath());
         } catch (IOException e) {
             printError("Something else failed, " + e.toString());
         }
@@ -88,11 +100,18 @@ public class FileRepository<E extends Idenfitiable> implements Serializable {
 
     public void readFromFile() {
         try {
-            FileRepository temp = mapper.readValue(storageLocation, new TypeReference<FileRepository<E>>(){});
+            FileRepository temp = mapper.readValue(storageLocation, new TypeReference<FileRepository<E>>() {
+            });
             this.ids = temp.getIds();
-            this.items = temp.getItems();
+            List n = mapper.convertValue(temp.getItems(), new TypeReference<List<E>>() {
+            });
+            this.items.clear();
+            for (Object o : n) {
+                this.items.add((E) mapper.convertValue(o, classType));
+            }
+            int i = 9;
         } catch (FileNotFoundException e) {
-            printError("No File, Default to no things. File:"+storageLocation.getAbsolutePath());
+            printError("No File, Default to no things. File:" + storageLocation.getAbsolutePath());
             writeToFile();
         } catch (IOException e) {
             printError("Something else failed, " + e.toString());
@@ -104,24 +123,24 @@ public class FileRepository<E extends Idenfitiable> implements Serializable {
     }
 
     public E add(E item) {
-        if (item.getId() == null) {
-            System.out.println("adding item without id");
-            item.setId(ids.nextNumber());
-        } else {
-            this.items.remove(item);
-        }
+        if (item.getId() != null)
+            this.remove(item.getId());
+        item.setId(ids.nextNumber());
         items.add(item);
         return item;
     }
 
     public Integer remove(int index) {
+
         Iterator<E> it = items.iterator();
         while (it.hasNext()) {
             if (it.next().getId() == index) {
                 it.remove();
                 ids.giveBack(index);
+                return index;
             }
         }
+        System.out.println("was a new item");
         return index;
     }
 
