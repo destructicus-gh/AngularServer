@@ -3,7 +3,9 @@ package AngularServer.controller;
 
 import AngularServer.models.SearchCriteria;
 import AngularServer.service.gamesearchers.CardHausSearcher;
+import AngularServer.service.gamesearchers.GameSearcher;
 import AngularServer.service.gamesearchers.GameSite;
+import AngularServer.service.gamesearchers.MiniatureMarketSearcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,30 +23,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class GameSearchController {
 
-
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public
-    @ResponseBody
-        //GameData[] search(HttpServletRequest request) {
-    GameSite[] search(@RequestBody SearchCriteria request) {
-        //String search = request.getParameter("search");
+    public @ResponseBody GameSite[] search(@RequestBody SearchCriteria request) {
         String search = request.getSearch();
-        //for (Map.Entry<String, String[]> k: request.getParameterMap().entrySet()){
-        //    System.out.println(k.getKey()+":"+ Arrays.toString(k.getValue()));
-        //}
+
         System.out.println(search);
         if (search == null) {
             return new GameSite[0];
         }
-        CardHausSearcher c = new CardHausSearcher();
-        c.fetch(search);
-        GameSite cardHaus = new GameSite();
-        cardHaus.setName("CardHaus");
-        cardHaus.setGameDatas(c.getGameData());
-        GameSite[] ret = new GameSite[1];
-        ret[0] = cardHaus;
-        return ret;
+        GameSite[] ret = new GameSite[2];
 
+        CardHausSearcher c = GameSearcher.getCardHausSearcher();
+        ret[0] = c.search(search);
+
+        MiniatureMarketSearcher m = GameSearcher.getMiniatureMarketSearcher();
+        ret[1] = m.search(search);
+
+        return ret;
     }
 
 

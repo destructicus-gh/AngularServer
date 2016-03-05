@@ -8,7 +8,16 @@ package AngularServer.service.gamesearchers;
  *         This software is the confidential and proprietary information
  *         of HEB
  */
-public interface GameSearcher {
-    String getName();
-    String getPrice();
+public abstract class GameSearcher {
+    abstract String getName();
+
+    abstract String getPrice();
+
+    public static CardHausSearcher getCardHausSearcher() {
+        return new CardHausSearcher();
+    }
+
+    public static MiniatureMarketSearcher getMiniatureMarketSearcher() {
+        return new MiniatureMarketSearcher();
+    }
 }

@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router']);
+var routerApp = angular.module('routerApp', ['ui.router', 'ngAnimate']);
 
 routerApp.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -20,14 +20,28 @@ routerApp.config(function ($stateProvider, $urlRouterProvider) {
             url: '/list',
             templateUrl: '/views/partial-home-list.html',
             controller: function ($scope) {
-                $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
-            }
+                this.callb = function(elem){
+                    this.str = elem.srcElement.id;
+                    elem.srcElement.tagged = true;
+                    console.log(elem);
+                };
+                this.calln = function(elem){
+                    elem.srcElement.tagged = false;
+                    console.log(elem);
+                };
+                this.clik = function(elem){
+
+                    console.log(elem);
+                };
+                this.str = "sdf";
+            },
+            controllerAs:"vm"
         })
 
         // nested list with just some random string data
         .state('home.paragraph', {
             url: '/paragraph',
-            template: 'I could sure use a drink right now.'
+            template: 'I could sure use a drink right now.',
         })
 
 

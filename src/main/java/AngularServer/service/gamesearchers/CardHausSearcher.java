@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  *         This software is the confidential and proprietary information
  *         of HEB
  */
-public class CardHausSearcher implements GameSearcher {
+public class CardHausSearcher extends GameSearcher {
     public boolean hasRun = false;
     public String urlContents = "";
 
@@ -79,5 +79,13 @@ public class CardHausSearcher implements GameSearcher {
             ret.add(gd);
         }
         return ret.toArray(new GameData[ret.size()]);
+    }
+
+    public GameSite search(String search){
+        this.fetch(search);
+        GameSite cardHaus = new GameSite();
+        cardHaus.setName("CardHaus");
+        cardHaus.setGameDatas(this.getGameData());
+        return cardHaus;
     }
 }

@@ -13,7 +13,12 @@
                 {name: "Name - A game of gaming", link: "http://www.google.com", price: "3.50"}
             ],
             name: "Gamestop",
-            current:{name: "Name - A game of gaming", link: "http://www.google.com", price: "3.50"}
+            //style: {
+            //    display: 'block',
+            //    transform: 'translateY(0%)',
+            //    'background-color': 'red'
+            //},
+            current: {name: "Name - A game of gaming", link: "http://www.google.com", price: "3.50"}
         }];
         vm.searchString = {search: "re"};
         vm.goTo = goTo;
@@ -21,7 +26,7 @@
 
 
         function search() {
-            $http.post('http://172.19.214.57:8080/search', vm.searchString).then(function (data) {
+            $http.post('http://ladm_4b1fyy1:8080/search', vm.searchString).then(function (data) {
                     $log.debug("success", vm.sites);
                     vm.sites = data.data;
 
@@ -30,6 +35,7 @@
 
                         if (currentValue.gameDatas.length > 0)
                             currentValue.current = currentValue.gameDatas[0];
+                        currentValue.up = true;
                     });
                     $log.debug("success", vm.sites);
                 }, function (data) {
@@ -39,8 +45,8 @@
         }
 
         function goTo(arg1, arg2) {
-            vm.sites.forEach(function(curr, ind, arr){
-                if (curr == arg1){
+            vm.sites.forEach(function (curr, ind, arr) {
+                if (curr == arg1) {
                     curr.current = arg2;
                 }
             });

@@ -141,6 +141,22 @@
     height:100%;
 }
 
+
+.slide-card {
+    transition: 0.5s linear all;
+    padding:20px;
+    position:absolute;
+    width:100%;
+    z-index:1;
+    top: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background: white;
+    display:block;
+}
+
+
+
 html{
     height: 100%;
 }

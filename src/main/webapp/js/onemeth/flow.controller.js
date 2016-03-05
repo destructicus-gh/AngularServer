@@ -4,9 +4,22 @@
 
 (function () {
     'use strict';
-    angular.module('routerApp').controller('OneMethFlowController', ['ElementRetrievalService', function (ER) {
+    angular.module('routerApp').controller('OneMethFlowController',  ['ElementRetrievalService', '$document',function (ER, $document) {
         var flow = this;
         flow.ready = false;
+        flow.document = $document;
+        flow.mouseOver = function (who){
+            console.log(who);
+
+        };
+        flow.mouseLeave = function (who){
+            console.log(who);
+        };
+        flow.click = function (who){
+            console.log(who);
+        };
+
+
 
         init();
 

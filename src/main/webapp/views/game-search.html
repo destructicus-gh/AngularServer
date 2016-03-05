@@ -1,16 +1,16 @@
 <!-- game-search.html -->
 <div class="col">
-
     <!-- COLUMN ONE NAMED VIEW -->
     <div class="row">
         <div class="col-sm-6">
-            <h4>Search Board Game Prices</h4>
+            <h4></h4>
         </div>
     </div>
 
     <div class="row valign-wrapper">
         <div class="input-field col s6" style="float:left">
-            <input ng-enter="vm.search()" ng-model="vm.searchString.search" value="" id="game_name" type="text" class="">
+            <input ng-enter="vm.search()" ng-model="vm.searchString.search" value="" id="game_name" type="text"
+                   class="">
             <label for="game_name">Game Title</label>
         </div>
         <div class="col s3 vvalign">
@@ -19,26 +19,32 @@
     </div>
     <div class="row center-align">
         <div>
-            <div ng-repeat="site in vm.sites track by $site_index" class="valign-wrapper left-align col s6"
+            <div ng-repeat="site in vm.sites track by $index" class="valign-wrapper left-align col s6"
                  style="float:left">
                 <div class="card small" style="margin:30px;padding:20px;float:left;width:100%">
                     <div class="card-image waves-effect waves-block waves-light" style="background-color: #c9c9c9">
                         <img class="activator" style="height:150px;width:inherit"
-                             ng-src="{{site.current.picture}}">
+                             ng-src="{{site.current.picture}}"/>
                     </div>
                     <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4"> {{site.name}}
-                            <i class="material-icons right">more_vert</i></span>
+                        <span class="card-title grey-text text-darken-4"> {{site.name}}
+                            <i class="material-icons right"
+                               ng-click="site.up = !site.up">more_vert</i>
+                        </span>
 
                         <p><a href="#">{{site.current.name}}</a> - {{site.current.price}}</p>
                     </div>
-                    <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4"> {{vm.site.name}} results for {{vm.searchString.search}}:<i
-                                class="material-icons right" style="padding-right:10px">close</i></span>
+
+
+                    <div class=" slide-card" ng-class="{on:site.up, off:!site.up}">
+                        <span class="card-title grey-text text-darken-4">
+                           {{onOff}} {{vm.site.name}} results for {{vm.searchString.search}}:
+                            <i class="material-icons right " style="padding-right:10px" ng-click="site.up = !site.up">close</i>
+                        </span>
                         <ul class="collection">
-                            <li class="activator collection-item" ng-repeat="entry in site.gameDatas track by $index">
+                            <li class=" collection-item" ng-repeat="entry in site.gameDatas track by $index">
                                 {{entry.name}} - {{entry.price}}
-                                <i ng-click="vm.goTo(site, entry)" class=" material-icons secondary-content">send</i>
+                                <i class=" material-icons secondary-content" ng-click="site.up = !site.up;vm.goTo(site, entry)">send</i>
                             </li>
                         </ul>
                     </div>
